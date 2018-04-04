@@ -17,7 +17,7 @@ import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private GoogleMap mMap;
+    public static GoogleMap mMap;
     ArrayList<Atm> atmArrayList;
 
     @Override
@@ -63,10 +63,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         //mMap.addMarker(new MarkerOptions().position(bishkek).title("Marker in Bishkek").snippet("A very good bank \n Open 24/7"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bishkek, 12));
 
-        for (int i=0; i < atmArrayList.size(); i++){
+        /*for (int i=0; i < atmArrayList.size(); i++){
             LatLng latLng = new LatLng(Double.valueOf(atmArrayList.get(i).getLat()), Double.valueOf(atmArrayList.get(i).getLon()));
             mMap.addMarker(new MarkerOptions().position(latLng).title(atmArrayList.get(i).getBank()).snippet(atmArrayList.get(i).getDesc()));
-        }
+        }*/
 
     }
 }

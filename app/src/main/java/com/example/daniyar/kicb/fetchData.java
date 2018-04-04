@@ -3,6 +3,10 @@ package com.example.daniyar.kicb;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -16,6 +20,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Map;
 
 
 public class fetchData extends AsyncTask<Void,Void,Void> {
@@ -63,6 +68,12 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
        // just to test if fetching works
         for(int i=0; i<atmArrayList.size(); i++){
             Log.v("Bank ", atmArrayList.get(i).bank);
+            LatLng latLng = new LatLng(Double.valueOf(atmArrayList.get(i).getLat()), Double.valueOf(atmArrayList.get(i).getLon()));
+            MapsActivity.mMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .title(atmArrayList.get(i).getBank())
+                    .snippet(atmArrayList.get(i).getDesc())
+                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
         }
     }
 }
