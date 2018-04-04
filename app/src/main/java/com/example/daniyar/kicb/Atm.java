@@ -1,3 +1,5 @@
+package com.example.daniyar.kicb;
+
 import android.text.format.Time;
 
 import java.net.URL;
@@ -28,6 +30,12 @@ public class Atm {
         this.hour_end = hour_end;
         this.desc = desc;
         this.url = url;
+    }
+    public Atm(String bank, String lat, String lon, String desc) {
+        this.bank = bank;
+        this.lat = lat;
+        this.lon = lon;
+        this.desc = desc;
     }
 
     public String getBank() {

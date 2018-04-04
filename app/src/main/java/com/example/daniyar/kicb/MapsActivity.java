@@ -2,17 +2,23 @@ package com.example.daniyar.kicb;
 
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    ArrayList<Atm> atmArrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +28,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+
+        fetchData process = new fetchData();
+        process.execute();
+
+        atmArrayList = new ArrayList<>();
+
+        //test data:
+        Atm atm1 = new Atm("KICB", "42.861", "74.581", "ATM Of KICB");
+        Atm atm2 = new Atm("KICB", "42.858", "74.59", "ATM Of KICB");
+        Atm atm3 = new Atm("Aiyl Bank", "42.868", "74.57", "ATM Of Aiyl Bank");
+        atmArrayList.add(atm1);
+        atmArrayList.add(atm2);
+        atmArrayList.add(atm3);
+
     }
 
 
@@ -39,8 +59,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng bishkek = new LatLng(42.866, 74.587);
+        //mMap.addMarker(new MarkerOptions().position(bishkek).title("Marker in Bishkek").snippet("A very good bank \n Open 24/7"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(bishkek, 12));
+
+        for (int i=0; i < atmArrayList.size(); i++){
+            LatLng latLng = new LatLng(Double.valueOf(atmArrayList.get(i).getLat()), Double.valueOf(atmArrayList.get(i).getLon()));
+            mMap.addMarker(new MarkerOptions().position(latLng).title(atmArrayList.get(i).getBank()).snippet(atmArrayList.get(i).getDesc()));
+        }
+
     }
 }
