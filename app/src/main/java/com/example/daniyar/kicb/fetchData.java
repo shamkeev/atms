@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
@@ -19,6 +20,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Time;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -44,7 +48,13 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
             JSONArray JA = new JSONArray(data);
             for(int i =0 ;i <JA.length(); i++){
                 JSONObject JO = (JSONObject) JA.get(i);
-                Atm atm = new Atm(JO.get("bank").toString(), JO.get("lat").toString(), JO.get("lon").toString(), JO.get("desc").toString());
+                Atm atm = new Atm(JO.get("bank").toString(),
+                        JO.get("lat").toString(),
+                        JO.get("lon").toString(),
+                        JO.get("hour_start").toString(),
+                        JO.get("hour_end").toString(),
+                        JO.get("desc").toString(),
+                        new URL(JO.get("url").toString()));
 
                 atmArrayList.add(atm);
 
@@ -67,13 +77,29 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
 
        // just to test if fetching works
         for(int i=0; i<atmArrayList.size(); i++){
-            Log.v("Bank ", atmArrayList.get(i).bank);
-            LatLng latLng = new LatLng(Double.valueOf(atmArrayList.get(i).getLat()), Double.valueOf(atmArrayList.get(i).getLon()));
-            MapsActivity.mMap.addMarker(new MarkerOptions()
-                    .position(latLng)
-                    .title(atmArrayList.get(i).getBank())
-                    .snippet(atmArrayList.get(i).getDesc())
-                    .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED)));
+            Atm atm = atmArrayList.get(i);
+            Log.v("Bank ", atm.bank);
+            LatLng latLng = new LatLng(Double.valueOf(atm.getLat()), Double.valueOf(atm.getLon()));
+            String snippet = "Working hours: "
+                    + atm.getHour_start()
+                    + "-"
+                    + atm.getHour_end()
+                    + "\n"
+                    + "Description: " + atm.getDesc();
+
+            Marker marker = MapsActivity.mMap.addMarker(new MarkerOptions().position(latLng));
+            marker.setTitle(atm.getBank());
+            marker.setSnippet(snippet);
+            switch (atm.getBank()){
+                case "KICB":
+                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+                    break;
+                case "Aiyl Bank":
+                    marker.setIcon(BitmapDescriptorFactory.defaultMarker(Float.valueOf("0.345")));
+                    break;
+                default:
+                    marker.setIcon(BitmapDescriptorFactory.defaultMarker());
+            }
         }
     }
 }
