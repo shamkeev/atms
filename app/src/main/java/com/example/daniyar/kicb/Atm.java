@@ -13,8 +13,8 @@ public class Atm {
     String bank;
     String lat;
     String lon;
-    Time hour_start;
-    Time hour_end;
+    String hour_start;
+    String hour_end;
     String desc;
     URL url;
 
@@ -22,7 +22,7 @@ public class Atm {
 
     }
 
-    public Atm(String bank, String lat, String lon, Time hour_start, Time hour_end, String desc, URL url) {
+    public Atm(String bank, String lat, String lon, String hour_start, String hour_end, String desc, URL url) {
         this.bank = bank;
         this.lat = lat;
         this.lon = lon;
@@ -62,19 +62,19 @@ public class Atm {
         this.lon = lon;
     }
 
-    public Time getHour_start() {
+    public String  getHour_start() {
         return hour_start;
     }
 
-    public void setHour_start(Time hour_start) {
+    public void setHour_start(String hour_start) {
         this.hour_start = hour_start;
     }
 
-    public Time getHour_end() {
+    public String getHour_end() {
         return hour_end;
     }
 
-    public void setHour_end(Time hour_end) {
+    public void setHour_end(String  hour_end) {
         this.hour_end = hour_end;
     }
 
