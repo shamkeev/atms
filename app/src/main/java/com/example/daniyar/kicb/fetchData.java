@@ -1,5 +1,6 @@
 package com.example.daniyar.kicb;
 
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.util.Log;
 
@@ -32,6 +33,17 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
     String dataParsed = "";
     String singleParsed ="";
     public static ArrayList<Atm> atmArrayList;
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        MapsActivity.progressDialog.setMessage("Loading...");
+        MapsActivity.progressDialog.setIndeterminate(false);
+        MapsActivity.progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        MapsActivity.progressDialog.setCancelable(false);
+        MapsActivity.progressDialog.show();
+    }
+
     @Override
     protected Void doInBackground(Void... voids) {
         try {
@@ -101,5 +113,6 @@ public class fetchData extends AsyncTask<Void,Void,Void> {
                     marker.setIcon(BitmapDescriptorFactory.defaultMarker());
             }
         }
+        MapsActivity.progressDialog.dismiss();
     }
 }

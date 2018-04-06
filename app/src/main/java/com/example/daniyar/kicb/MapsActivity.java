@@ -1,5 +1,6 @@
 package com.example.daniyar.kicb;
 
+import android.app.ProgressDialog;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     public static GoogleMap mMap;
+    public static ProgressDialog progressDialog;
     ArrayList<Atm> atmArrayList;
 
     @Override
@@ -28,6 +30,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        progressDialog = new ProgressDialog(MapsActivity.this);
 
         fetchData process = new fetchData();
         process.execute();
