@@ -3,6 +3,7 @@ package com.example.daniyar.kicb;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.GoogleMap;
@@ -36,6 +37,36 @@ public class CustomInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
         if(!snippet.equals("")){
             tvSnippet.setText(snippet);
         }
+
+        ImageView imLogo = (ImageView) view.findViewById(R.id.logo_image_view);
+        switch (marker.getTitle()){
+            case "KICB":
+                imLogo.setImageResource(R.drawable.kicb);
+                break;
+            case "Aiyl Bank":
+                imLogo.setImageResource(R.drawable.aiyl);
+                break;
+            case "Bank of Asia":
+                imLogo.setImageResource(R.drawable.asia);
+                break;
+            case "DosCredoBank":
+                imLogo.setImageResource(R.drawable.dos);
+                break;
+            case "Bakai Bank":
+                imLogo.setImageResource(R.drawable.bakai);
+                break;
+            case  "BTA Bank":
+                imLogo.setImageResource(R.drawable.bta);
+                break;
+            case "FinansCreditBank":
+                imLogo.setImageResource(R.drawable.finans);
+                break;
+            default:
+                imLogo.setImageResource(R.drawable.networklogo);
+                break;
+
+        }
+
     }
 
     @Override
